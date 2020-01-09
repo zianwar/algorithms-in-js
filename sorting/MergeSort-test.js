@@ -24,9 +24,3 @@ test('mergeSort one element array', t => {
   const sorted = mergeSort(A);
   t.deepEqual(sorted, A);
 });
-
-test('mergeSort negative elements', t => {
-  const A = [10, 2, 5, 1, -1];
-  const sorted = mergeSort(A);
-  t.deepEqual(sorted, [-1, 1, 2, 5, 10]);
-});
