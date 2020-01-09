@@ -1,3 +1,11 @@
+/*
+==== Time ====
+O(nlogn)
+Recurence relation: T(n) = 2T(n/2) + n
+
+=== Space ====
+O(n)
+*/
 
 function mergeSort(A) {
   if (!A.length) return A;
