@@ -7,6 +7,7 @@ O(nlogn)
 === Space ====
 O(1)
 */
+
 function heapSort(A) {
   buildHeap(A);
   let heapEndIndex = A.length - 1;
