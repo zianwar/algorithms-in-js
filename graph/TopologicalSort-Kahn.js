@@ -12,13 +12,14 @@
 // Time complexity: O(E+V)
 function topologicalSort(edges) {
   const adjList = buildGraph(edges);
-  const indegrees = computeIndegrees(adjList);
+  const indegrees = buildIndegrees(adjList);
+
   const queue = [];
   const ordering = [];
 
   // Pick all the vertices with in-degree as 0 and add them to the queue.
-  for (let i = 0; i < indegrees.length; i++) {
-    if (indegrees[i] === 0) queue.push(i);
+  for (const [v, degree] of indegrees) {
+    if (degree === 0) queue.push(v);
   }
 
   // Dequeue a vertex from the queue and then repeat the following until queue is empty:
@@ -28,9 +29,11 @@ function topologicalSort(edges) {
   while (queue.length) {
     const v = queue.shift();
 
-    for (const neighbor of adjList.get(v)) {
-      indegrees[neighbor]--;
-      if (indegrees[neighbor] === 0) queue.push(neighbor);
+    if (adjList.has(v)) {
+      for (const neighbor of adjList.get(v)) {
+        indegrees.set(neighbor, indegrees.get(neighbor) - 1);
+        if (indegrees.get(neighbor) === 0) queue.push(neighbor);
+      }
     }
 
     ordering.push(v);
@@ -38,9 +41,8 @@ function topologicalSort(edges) {
 
   // If count of visited vertices in ordering array is not equal to the number of vertices
   // in the graph then the topological sort is not possible for the given graph.
-  const vertices = Array.from(adjList.keys());
-  if (ordering.length !== vertices.length) {
-    // "Graph contains a cylce, topological sort is not possible."
+  if (ordering.length !== indegrees.size) {
+    // Graph contains a cylce, topological sort is not possible.
     return [];
   }
 
@@ -51,11 +53,15 @@ function topologicalSort(edges) {
 // increment the in-degree of all the vertices connected to it by 1.
 // Other way to do it is: to traverse the array of edges and simply increase the counter of the destination vertex by 1.
 // Both approaches take O(E + V).
-function computeIndegrees(adjList) {
-  const indegrees = Array.from(adjList.keys()).fill(0);
+function buildIndegrees(adjList) {
+  const indegrees = new Map();
+  for (const v of adjList.keys()) {
+    indegrees.set(v, 0);
+  }
+
   for (const v of adjList.keys()) {
     for (const neighbor of adjList.get(v)) {
-      indegrees[neighbor]++;
+      indegrees.set(neighbor, indegrees.get(neighbor) + 1);
     }
   }
   return indegrees;
