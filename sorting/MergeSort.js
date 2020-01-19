@@ -1,4 +1,10 @@
 /*
+Merge Sort
+- Not the fastest nlogn sorting algorithm, since it's using merging and requires extra space
+- Since it's based on merging, it can be done when the data is stored offline,
+  you can merge both sub arrays as they come in.
+- Useful when the data cannot fit in the RAM, you can split the data and merge it as it comes in
+
 ==== Time ====
 O(nlogn)
 Recurence relation: T(n) = 2T(n/2) + n
