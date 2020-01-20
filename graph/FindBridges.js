@@ -1,10 +1,24 @@
 /*
-  Finds all the bridges on an undirected graph.
+  Bridges and articulation points are important in graph theory because they often hint at weak points, bottlenecks or vulnerabilities in a graph.
+  Therefore, it's important to be able to quickly find/detect when and where these occur.
 */
 
 // Global or class scoped variables
 let id = 0; // To label each vertex with a unique id number.
 
+/**
+ * findBridges
+ * Finds all the bridges on an undirected graph
+ *
+ * - Start at any node and do a Depth First Search (DFS) traversal labeling nodes with an increasing id value as you go.
+ * - Keep track the id of each node and the smallest low-link value.
+ * - During the DFS, bridges will be found where the id of the node your edge is coming from is less than the low link value
+ *   of  the node your edge is going to.
+ *
+ * NOTE: The low-link value of a node is defined as the smallest (lowest) id reachable from that node when doing a DFS (including itself).
+ *
+ * @param {Array} edges
+ */
 function findBridges(edges) {
   const adjList = buildGraph(edges);
 
@@ -46,11 +60,14 @@ function dfs(adjList, visited, ids, low, at, prev, bridges) {
         bridges.push([at, to]);
       }
     } else {
+      // When try to visit an already-visited node, update
+      // its low-link value to be min(current low-link value, id of the node its going to)
       low.set(at, Math.min(low.get(at), ids.get(to)));
     }
   }
 }
 
+// Builds an undirected graph
 function buildGraph(edges) {
   let adjList = new Map();
   for (let i = 0; i < edges.length; i++) {
@@ -59,6 +76,7 @@ function buildGraph(edges) {
     if (!adjList.has(to)) adjList.set(to, []);
     if (!adjList.has(from)) adjList.set(from, []);
     adjList.get(from).push(to);
+    adjList.get(to).push(from);
   }
   return adjList;
 }
