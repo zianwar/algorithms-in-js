@@ -56,7 +56,7 @@ function dfs(adjList, state, ordering, v) {
 
   state.set(v, VISITING);
 
-  for (const [n] of adjList) {
+  for (const n of adjList.get(v)) {
     if (dfs(adjList, state, ordering, n)) {
       // We found a cycle, return back to the caller.
       return true;

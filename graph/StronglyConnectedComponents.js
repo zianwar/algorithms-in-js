@@ -76,7 +76,6 @@ class StronglyConnectedComponents {
       while (this.stack.length) {
         const v = this.stack.pop();
         this.onStack.delete(v);
-        ssc.push(v);
         this.low.set(v, this.ids.get(at));
         if (v === at) break;
       }

@@ -19,6 +19,5 @@ test("findSCCs", t => {
   ];
   const SSCs = new StronglyConnectedComponents(edges);
   const result = SSCs.findSCCs();
-  console.log("result", result);
   t.deepEqual(result, [[1, 2, 3], [4, 5], [6, 7], [8]]);
 });
