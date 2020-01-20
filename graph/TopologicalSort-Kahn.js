@@ -1,15 +1,21 @@
-/*
-  Topological Sort
+/**
+ * Topological Sort
+ *
+ * A topological sort of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering.
+ * - A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a directed acyclic graph (DAG).
+ * - Any DAG has at least one topological ordering, and algorithms are known for constructing a topological ordering of any DAG in linear time.
+ *
+ * The usual algorithms for topological sorting have running time linear in the number of nodes plus the number of edges, asymptotically.
+ */
 
-  A topological sort of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, u comes before v in the ordering.
-  - A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a directed acyclic graph (DAG).
-  - Any DAG has at least one topological ordering, and algorithms are known for constructing a topological ordering of any DAG in linear time.
 
-  The usual algorithms for topological sorting have running time linear in the number of nodes plus the number of edges, asymptotically.
-*/
-
-// Kahn's algorithm for graph topological sort.
-// Time complexity: O(E+V)
+/**
+ * topologicalSort
+ * Kahn's algorithm for graph topological sort.
+ * Time complexity: O(E+V)
+ *
+ * @param {*} edges
+ */
 function topologicalSort(edges) {
   const adjList = buildGraph(edges);
   const indegrees = buildIndegrees(adjList);
@@ -49,10 +55,17 @@ function topologicalSort(edges) {
   return ordering;
 }
 
-// Intitialize in-degree of all vertices to 0 and traverse the list for every vertex and then
-// increment the in-degree of all the vertices connected to it by 1.
-// Other way to do it is: to traverse the array of edges and simply increase the counter of the destination vertex by 1.
-// Both approaches take O(E + V).
+/**
+ * buildIndegrees
+ *
+ * Intitialize in-degree of all vertices to 0 and traverse the list for every vertex and then
+ * increment the in-degree of all the vertices connected to it by 1.
+ * Other way to do it is: to traverse the array of edges and simply increase the counter of the destination vertex by 1.
+ * Both approaches take O(E+V).
+ *
+ * @param {Map} adjList
+ * @return {Map} indegrees
+ */
 function buildIndegrees(adjList) {
   const indegrees = new Map();
   for (const v of adjList.keys()) {
@@ -67,8 +80,13 @@ function buildIndegrees(adjList) {
   return indegrees;
 }
 
-// Build the graph adjacency list from the edges array
-// [[u,v], [u,w]] => { u: [v,w], v: [], w: [] }
+/**
+ * buildGraph
+ * Build the directed graph adjacency list from the edges array
+ *
+ * @param {Array} edges
+ * @returns {Map} adjList Adjacency list
+ */
 function buildGraph(edges) {
   let adjList = new Map();
   for (let i = 0; i < edges.length; i++) {
@@ -80,5 +98,6 @@ function buildGraph(edges) {
   }
   return adjList;
 }
+
 
 module.exports = topologicalSort;

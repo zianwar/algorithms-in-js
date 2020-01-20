@@ -1,4 +1,4 @@
-/*
+/**
  * Topological Sort
  *
  * A topological sort of a directed graph is a linear ordering of its vertices such that
@@ -10,7 +10,8 @@
  *
  * The usual algorithms for topological sorting have running time linear in
  * the number of nodes plus the number of edges, asymptotically.
-*/
+ */
+
 
 // Constants for managing possible states of vertices.
 const VISITED = 1;
