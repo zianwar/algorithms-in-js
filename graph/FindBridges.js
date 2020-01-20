@@ -1,18 +1,23 @@
 /*
- * Bridges and articulation points are important in graph theory because they often hint at weak points, bottlenecks or vulnerabilities in a graph.
- * Therefore, it's important to be able to quickly find/detect when and where these occur.
+ * Bridges and articulation points are important in graph theory because they
+ * often hint at weak points, bottlenecks or vulnerabilities in a graph.
+ * Therefore, it's important to be able to quickly find/detect
+ * when and where these occur.
  */
 
 /**
  * findBridges
  * Finds all the bridges on an undirected graph
  *
- * - Start at any node and do a Depth First Search (DFS) traversal labeling nodes with an increasing id value as you go.
+ * - Start at any node and do a Depth First Search (DFS) traversal labeling
+ *   nodes with an increasing id value as you go.
  * - Keep track the id of each node and the smallest low-link value.
- * - During the DFS, bridges will be found where the id of the node your edge is coming from is less than the low link value
- *   of  the node your edge is going to.
+ * - During the DFS, bridges will be found where the id of the node
+ *   your edge is coming from is less than the low link value of
+ *   the node your edge is going to.
  *
- * NOTE: The low-link value of a node is defined as the smallest (lowest) id reachable from that node when doing a DFS (including itself).
+ * NOTE: The low-link value of a node is defined as the smallest (lowest)
+ *   id reachable from that node when doing a DFS (including itself).
  *
  * @param {Array} edges
  * @returns {Array} bridges
@@ -72,7 +77,8 @@ function dfs(adjList, visited, ids, low, at, prev, bridges, id) {
       }
     } else {
       // When try to visit an already-visited node, update
-      // its low-link value to be min(current low-link value, id of the node its going to)
+      // its low-link value to be min of current low-link value and
+      // id of the node its going to.
       low.set(at, Math.min(low.get(at), ids.get(to)));
     }
   }

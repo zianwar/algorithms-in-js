@@ -1,9 +1,11 @@
 /**
  * Topological Sort
  *
- * A topological sort of a directed graph is a linear ordering of its vertices such that
- * for every directed edge uv from vertex u to vertex v, u comes before v in the ordering.
- * - A topological ordering is possible if and only if the graph has no directed cycles,
+ * A topological sort of a directed graph is a linear ordering of
+ * its vertices such that: for every directed edge uv from vertex u to
+ * vertex v, u comes before v in the ordering.
+ * - A topological ordering is possible if and only if the graph
+ *   has no directed cycles,
  *   that is, if it is a directed acyclic graph (DAG).
  * - Any DAG has at least one topological ordering, and algorithms are known for
  *   constructing a topological ordering of any DAG in linear time.
@@ -19,7 +21,8 @@ const VISITING = 2;
 
 /**
  * topologicalSort
- * Depth-first search algorithm for finding a topological sort in a directed graph.
+ * Depth-first search algorithm for finding a topological sort
+ * in a directed graph.
  *
  * @param {Array} edges
  * @returns {Array} ordering Topological ordering of the graph.

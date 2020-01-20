@@ -1,6 +1,7 @@
 /*
 Quick Sort
-When implemented well, it can be about two or three times faster than merge sort and heapsort.
+When implemented well, it can be about two or three times faster
+than merge sort and heapsort.
 
 ==== Time ====
 Average Case: O(nlogn)

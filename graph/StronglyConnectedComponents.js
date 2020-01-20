@@ -1,6 +1,8 @@
 /*
   Strongly Connected Components in a directed graph.
-  Strongly Connected Components (SCCs) can be thought of as self-contained cycles within a directed graph where every vertex in a given cycle can reach every other vertex in the same cycle.
+  Strongly Connected Components (SCCs) can be thought of as self-contained
+  cycles within a directed graph where every vertex in a given cycle can
+  reach every other vertex in the same cycle.
 */
 
 /**
@@ -9,9 +11,15 @@
  * Finds Strongly Connected Components using Tarjan's Algorithm:
  *
  * 1. Mark the id of each node as unvisited.
- * 2. Start DFS. Upon visiting a node assign it an id and a low—link value. Also mark current nodes as visited and add them to a seen stack.
- * 3. On DFS callback, if the previous node is on the stack then min the current node's low—link value with the last node's low—link value (This allows low—link values to propagate throughout cycles).
- * 4. After visiting all neighbours, if the current node started a connected component (As we will see, a node started a connected component if its id equals its low link value) then pop nodes off stack until current node is reached.
+ * 2. Start DFS. Upon visiting a node assign it an id and a low—link value.
+ *    Also mark current nodes as visited and add them to a seen stack.
+ * 3. On DFS callback, if the previous node is on the stack,
+ *    then min the current node's low—link value with the last node's low—link
+ *    value (This allows low—link values to propagate throughout cycles).
+ * 4. After visiting all neighbours, if the current node started a connected
+ *    component (As we will see, a node started a connected component if its
+ *    id equals its low link value) then pop nodes off stack until
+ *    current node is reached.
  *
  */
 class StronglyConnectedComponents {
@@ -70,7 +78,8 @@ class StronglyConnectedComponents {
       }
     }
 
-    // When a completed SCC is found (current node has visited all its neighbours and its lowlink value equals its id)
+    // When a completed SCC is found (current node has visited all
+    // its neighbours and its lowlink value equals its id)
     // pop off all associated nodes off the stack.
     if (this.ids.get(at) === this.low.get(at)) {
       while (this.stack.length) {
