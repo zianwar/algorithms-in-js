@@ -14,7 +14,8 @@
  * Kahn's algorithm for graph topological sort.
  * Time complexity: O(E+V)
  *
- * @param {*} edges
+ * @param {Array} edges
+ * @returns {Array} ordering Topological ordering of the graph.
  */
 function topologicalSort(edges) {
   const adjList = buildGraph(edges);

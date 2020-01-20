@@ -1,7 +1,10 @@
-/*
- * Find Components in a graph
- */
-
+ /**
+  * findComponents
+  * Find components in a graph
+  *
+  * @param {Array} edges
+  * @return {Array} components
+  */
 function findComponents(edges) {
   const adjList = buildGraph(edges);
   const visited = new Map();
@@ -25,6 +28,16 @@ function findComponents(edges) {
   return components;
 }
 
+/**
+ * dfs
+ * Performs a Depth-first-search on the directed graph.
+ *
+ * @param {Map} adjList
+ * @param {Any} at
+ * @param {Map} visited
+ * @param {Map} componentIds
+ * @param {Number} id
+ */
 function dfs(adjList, at, visited, componentIds, id) {
   visited.set(at, true);
   componentIds.set(at, id);

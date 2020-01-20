@@ -1,10 +1,7 @@
 /*
-  Bridges and articulation points are important in graph theory because they often hint at weak points, bottlenecks or vulnerabilities in a graph.
-  Therefore, it's important to be able to quickly find/detect when and where these occur.
-*/
-
-// Global or class scoped variables
-let id = 0; // To label each vertex with a unique id number.
+ * Bridges and articulation points are important in graph theory because they often hint at weak points, bottlenecks or vulnerabilities in a graph.
+ * Therefore, it's important to be able to quickly find/detect when and where these occur.
+ */
 
 /**
  * findBridges
@@ -18,6 +15,7 @@ let id = 0; // To label each vertex with a unique id number.
  * NOTE: The low-link value of a node is defined as the smallest (lowest) id reachable from that node when doing a DFS (including itself).
  *
  * @param {Array} edges
+ * @returns {Array} bridges
  */
 function findBridges(edges) {
   const adjList = buildGraph(edges);
@@ -33,20 +31,33 @@ function findBridges(edges) {
     ids.set(v, 0);
   }
 
+  const id = 0; // For labeling each vertex with a unique id number.
   const bridges = [];
 
   for (const [v] of adjList) {
     if (!visited.get(v)) {
-      dfs(adjList, visited, ids, low, v, null, bridges);
+      dfs(adjList, visited, ids, low, v, null, bridges, id + 1);
     }
   }
 
   return bridges;
 }
 
-function dfs(adjList, visited, ids, low, at, prev, bridges) {
+/**
+ * dfs
+ * Performs a Depth-first-search on the directed graph.
+ *
+ * @param {Map} adjList
+ * @param {Map} visited
+ * @param {Map} ids
+ * @param {Map} low
+ * @param {Any} at
+ * @param {Any} prev
+ * @param {Array} bridges
+ * @param {Number} id
+ */
+function dfs(adjList, visited, ids, low, at, prev, bridges, id) {
   visited.set(at, true);
-  id += 1;
   ids.set(at, id);
   low.set(at, id); // make the default low-link value of v its id.
 
@@ -54,7 +65,7 @@ function dfs(adjList, visited, ids, low, at, prev, bridges) {
     if (to === prev) continue;
 
     if (!visited.get(to)) {
-      dfs(adjList, visited, ids, low, to, at, bridges);
+      dfs(adjList, visited, ids, low, to, at, bridges, id + 1);
       low.set(at, Math.min(low.get(at), low.get(to)));
       if (ids.get(at) < low.get(to)) {
         bridges.push([at, to]);
@@ -67,7 +78,13 @@ function dfs(adjList, visited, ids, low, at, prev, bridges) {
   }
 }
 
-// Builds an undirected graph
+/**
+ * buildGraph
+ * Build the undirected graph adjacency list from the edges array
+ *
+ * @param {Array} edges
+ * @returns {Map} adjList Adjacency list
+ */
 function buildGraph(edges) {
   let adjList = new Map();
   for (let i = 0; i < edges.length; i++) {
