@@ -25,7 +25,7 @@
 function findBridges(edges) {
   const graph = buildGraph(edges);
 
-  // Data structure that holds different states of vertices.
+  // Data structure that holds state of vertices.
   const state = {
     ids: new Map(), // Maps a vertex to an id number.
     low: new Map(), // Maps a vertex to its low-link value.
@@ -56,9 +56,7 @@ function findBridges(edges) {
  * Performs a Depth-first-search on the directed graph.
  *
  * @param {Map} graph
- * @param {Map} visited
- * @param {Map} ids
- * @param {Map} low
+ * @param {Map} state
  * @param {Any} at
  * @param {Any} prev
  * @param {Array} bridges
