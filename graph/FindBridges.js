@@ -23,25 +23,28 @@
  * @returns {Array} bridges
  */
 function findBridges(edges) {
-  const adjList = buildGraph(edges);
+  const graph = buildGraph(edges);
 
-  const ids = new Map(); // Maps a vertex to an id number.
-  const low = new Map(); // Maps a vertex to it low-link value.
-  const visited = new Map(); // Maps wether a vertex is visited.
-
-  // Set initial values of visited to false, low and ids to 0.
-  for (const [v] of adjList) {
-    visited.set(v, false);
-    low.set(v, 0);
-    ids.set(v, 0);
+  // Data structure that holds different states of vertices.
+  const state = {
+    ids: new Map(), // Maps a vertex to an id number.
+    low: new Map(), // Maps a vertex to its low-link value.
+    visited: new Map(), // Maps wether a vertex is visited or not.
   }
 
-  const id = 0; // For labeling each vertex with a unique id number.
+  // Set initial state values.
+  for (const [v] of graph) {
+    state.visited.set(v, false);
+    state.low.set(v, 0);
+    state.ids.set(v, 0);
+  }
+
+  const id = 0; // Unique id number generator.
   const bridges = [];
 
-  for (const [v] of adjList) {
-    if (!visited.get(v)) {
-      dfs(adjList, visited, ids, low, v, null, bridges, id + 1);
+  for (const [v] of graph) {
+    if (!state.visited.get(v)) {
+      dfs(graph, state, v, null, bridges, id + 1);
     }
   }
 
@@ -52,7 +55,7 @@ function findBridges(edges) {
  * dfs
  * Performs a Depth-first-search on the directed graph.
  *
- * @param {Map} adjList
+ * @param {Map} graph
  * @param {Map} visited
  * @param {Map} ids
  * @param {Map} low
@@ -61,25 +64,27 @@ function findBridges(edges) {
  * @param {Array} bridges
  * @param {Number} id
  */
-function dfs(adjList, visited, ids, low, at, prev, bridges, id) {
-  visited.set(at, true);
-  ids.set(at, id);
-  low.set(at, id); // make the default low-link value of v its id.
+function dfs(graph, state, at, prev, bridges, id) {
+  state.visited.set(at, true);
+  state.ids.set(at, id);
+  state.low.set(at, id); // make the default low-link value of v its id.
 
-  for (const to of adjList.get(at)) {
+  for (const to of graph.get(at)) {
+    // Avoid going back to the same vertex (since this an undirected graph).
     if (to === prev) continue;
 
-    if (!visited.get(to)) {
-      dfs(adjList, visited, ids, low, to, at, bridges, id + 1);
-      low.set(at, Math.min(low.get(at), low.get(to)));
-      if (ids.get(at) < low.get(to)) {
+    if (!state.visited.get(to)) {
+      dfs(graph, state, to, at, bridges, id + 1);
+      // Update low-link value to lowest when backtracking.
+      state.low.set(at, Math.min(state.low.get(at), state.low.get(to)));
+      if (state.ids.get(at) < state.low.get(to)) {
         bridges.push([at, to]);
       }
     } else {
       // When try to visit an already-visited node, update
       // its low-link value to be min of current low-link value and
       // id of the node its going to.
-      low.set(at, Math.min(low.get(at), ids.get(to)));
+      state.low.set(at, Math.min(state.low.get(at), state.ids.get(to)));
     }
   }
 }
