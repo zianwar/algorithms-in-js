@@ -13,6 +13,6 @@
   "author": "Anwar Ziani <anwaar.ziani@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^2.4.0"
+    "ava": "^5.3.1"
   }
 }
